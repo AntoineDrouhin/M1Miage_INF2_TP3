@@ -6,62 +6,51 @@
 package fr.sorbonne.miage.m1.dao;
 
 import fr.sorbonne.miage.m1.beans.Author;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
- * @author Antoine
+ * @author eddebbima
  */
-public class AuthorDAO implements DAO<Author> {
-
-    @PersistenceContext(unitName = "jpa_unit")
+public class AuthorDAO implements DAO<Author>{
+    
     private EntityManager em;
-    
-    @Override
-    public List findAll() {
-        Query query = em.createQuery("SELECT a FROM Author a");
-        return (List<Author>) query.getResultList();
+      
+    public AuthorDAO() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence");
+        em = emf.createEntityManager();
     }
 
-    @Override
-    public void create(Author author) {
-        em.getTransaction().begin();        
-        em.persist(author);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    @Override
-    public Author find(int id) {
-        Author author = null;
-        try {
-            author = em.find(Author.class, id);
-        } catch (EntityNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return author;
-    }
-
-    @Override
-    public void update(Author author) {
+    public void create(Author obj) {    
         em.getTransaction().begin();
-        em.merge(author);
+        em.persist(obj);
         em.getTransaction().commit();
         em.close();
     }
 
-    @Override
-    public void delete(Author author) {
+    public Author findById(int id) {
+        return em.find(Author.class, id);
+    }
+
+    public void update(Author obj) {
         em.getTransaction().begin();
-        em.remove(author);
+        em.merge(obj);
         em.getTransaction().commit();
         em.close();
     }
-    
+
+    public void delete(Author obj) {
+        em.getTransaction().begin();
+        em.remove(obj);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public List<Author> findAll() {
+        List<Author> listAuthor = em.createQuery("Select b FROM Book b").getResultList();
+        return listAuthor;
+    }
 }

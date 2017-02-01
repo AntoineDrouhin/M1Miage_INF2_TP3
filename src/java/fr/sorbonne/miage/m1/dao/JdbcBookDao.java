@@ -17,11 +17,11 @@ public class JdbcBookDao implements DAO<Book> {
 
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:8889/Library";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/Library";
 
     //  Database credentials
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "";
 
     private Connection connection;
 
@@ -53,6 +53,11 @@ public class JdbcBookDao implements DAO<Book> {
         }
     }
 
+    @Override
+    public Book findById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Method that creates a java.sql.Connection object to database
      *
@@ -71,11 +76,6 @@ public class JdbcBookDao implements DAO<Book> {
 
     @Override
     public void create(Book obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Book find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

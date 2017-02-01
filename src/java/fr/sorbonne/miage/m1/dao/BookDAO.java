@@ -8,57 +8,55 @@ package fr.sorbonne.miage.m1.dao;
 import fr.sorbonne.miage.m1.beans.Book;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
- * @book Antoine
+ * @author eddebbima
  */
 public class BookDAO implements DAO<Book> {
-@PersistenceContext(unitName = "jpa_unit")
+
     private EntityManager em;
-    
-    @Override
-    public List findAll() {
-        Query query = em.createQuery("SELECT b FROM Book b");
-        return (List<Book>) query.getResultList();
+
+    public BookDAO() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence");
+        em = emf.createEntityManager();
     }
 
     @Override
-    public void create(Book book) {
-        em.getTransaction().begin();        
-        em.persist(book);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    @Override
-    public Book find(int id) {
-        Book book = null;
-        try {
-            book = em.find(Book.class, id);
-        } catch (EntityNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return book;
-    }
-
-    @Override
-    public void update(Book book) {
+    public void create(Book obj) {
         em.getTransaction().begin();
-        em.merge(book);
+        em.persist(obj);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public void delete(Book book) {
+    public Book findById(int id) {
+        return em.find(Book.class, id);
+    }
+
+    @Override
+    public void update(Book obj) {
         em.getTransaction().begin();
-        em.remove(book);
+        em.merge(obj);
         em.getTransaction().commit();
         em.close();
     }
-    
+
+    @Override
+    public void delete(Book obj) {
+        em.getTransaction().begin();
+        em.remove(obj);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Override
+    public List<Book> findAll() {
+        List<Book> listBook = em.createQuery("Select b FROM Book b").getResultList();
+        return listBook;
+    }
+
 }

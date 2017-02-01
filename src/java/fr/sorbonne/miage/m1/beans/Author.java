@@ -1,78 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fr.sorbonne.miage.m1.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 /**
  *
- * @author Antoine, Aurelien
+ * @author Julien
  */
+
 @Entity
-@Table(name = "Author")
-@Access(AccessType.FIELD)
-public class Author implements Serializable {
+
+public class Author implements Serializable{
     
     @Id
-    @Column(nullable = false, unique= true, precision = 11)
-    private int id;
+    @Column(nullable = false, unique = true)
+    private Integer id;
     
-    @Column(nullable = false, length = 255 )
+    @Column(nullable = false)
     private String firstname;
     
-    @Column(nullable = false, length = 255 )
+    @Column(nullable = false)
     private String lastname;
     
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "Book")
-    private Collection<Book> books;
+    @ManyToMany(mappedBy = "sesAuteurs")
+    private List<Book> sesLivres;
+    
+    public Author() {
+        this.id = null;
+        this.firstname = null;
+        this.lastname = null;
+    }
+    
+    public Author(Integer id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 
-    /**
-     * @return the id
-     */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    /**
-     * @return the firstname
-     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getFirstname() {
         return firstname;
     }
 
-    /**
-     * @return the lastname
-     */
-    public String getLastname() {
-        return lastname;
-    }
-
-    /**
-     * @return the books
-     */
-    public Collection<Book> getBooks() {
-        return books;
-    }
-
-    /**
-     * @param firstname the firstname to set
-     */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    /**
-     * @param lastname the lastname to set
-     */
+    public String getLastname() {
+        return lastname;
+    }
+
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+    
     
 }
