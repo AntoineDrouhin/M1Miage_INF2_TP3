@@ -9,3 +9,6 @@
 /MyEA/INF_JPA_BookDB/dist/
 /INF_JPA_BookDB/build/
 /INF_JPA_BookDB/dist/
+/MyEA-ejb/dist/
+/MyEA-ejb/build/
+/MyEA-ejb/nbproject/private/
